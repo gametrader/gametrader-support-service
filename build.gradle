@@ -2,11 +2,11 @@ plugins {
 	id 'org.springframework.boot' version '2.6.4'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
-	id "io.swagger.core.v3.swagger-gradle-plugin" version "2.1.13"
 	id "org.openapi.generator" version "5.3.0"
 	id "jacoco"
 }
 
+def projectName = 'gametrader-support-service'
 group = 'com.gametrader'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
@@ -19,6 +19,10 @@ configurations {
 
 repositories {
 	mavenCentral()
+	maven {
+		url "http://77.55.193.156/releases"
+		allowInsecureProtocol true
+	}
 }
 
 dependencies {
@@ -26,16 +30,91 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.mapstruct:mapstruct:1.4.2.Final'
 	implementation 'org.flywaydb:flyway-core'
+	implementation 'org.springdoc:springdoc-openapi-ui:1.6.6'
+
 	compileOnly 'org.projectlombok:lombok'
-	runtimeOnly 'com.h2database:h2'
+
 	runtimeOnly 'org.postgresql:postgresql'
+
 	annotationProcessor 'org.projectlombok:lombok'
 	annotationProcessor 'org.mapstruct:mapstruct-processor:1.4.2.Final'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testImplementation 'org.springframework.security:spring-security-test'
 
+	testImplementation 'com.h2database:h2'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	//testImplementation 'org.springframework.security:spring-security-test'
+
+}
+
+build {
+	dependsOn jacocoTestCoverageVerification
 }
 
 tasks.named('test') {
 	useJUnitPlatform()
+}
+
+//heroku task needed for deploy
+task stage(dependsOn: ['build', 'clean'])
+build.mustRunAfter clean
+
+//jacoco
+test {
+	finalizedBy jacocoTestReport // report is always generated after tests run
+}
+jacocoTestReport {
+	dependsOn test // tests are required to run before generating the report
+
+	reports {
+		html.outputLocation = layout.buildDirectory.dir('jacocoHtml')
+	}
+}
+
+jacocoTestCoverageVerification {
+	violationRules {
+
+		rule {
+			enabled = true
+			element = 'CLASS'
+			includes = ['com.gametrader.*']
+			excludes = ['com.gametrader.gametradersupportservice.GametraderSupportServiceApplication',
+						'com.gametrader.gametradersupportservice.config.*',
+						'com.gametrader.gametradersupportservice.controller.TestController'
+			]
+
+			limit {
+				counter = 'LINE'
+				value = 'COVEREDRATIO'
+				minimum = 0.8
+			}
+		}
+	}
+}
+
+//openapi
+def jsonGeneratorFileName = 'gametrader-support-service.json'
+def clientBasePackage = 'com.gametrader.api'
+
+openApiGenerate {
+	def desc = "$projectName-rest-client".toString()
+	generatorName = 'java'
+	library = 'resttemplate'
+	inputSpec = "$rootDir/src/main/resources/open-api/$jsonGeneratorFileName".toString() //src/main/resources/open-api/$jsonGeneratorFileName".toString()
+	templateDir = "$rootDir/src/main/resources/open-api/template".toString()
+	outputDir = "$rootDir/client".toString()
+	apiPackage = "$clientBasePackage".toString()
+	invokerPackage = "$clientBasePackage".concat(".invoker")
+	modelPackage = "$clientBasePackage".concat(".model")
+	groupId = "$group".toString()
+	id = desc
+	skipValidateSpec = true
+	version = "$project.version".toString()
+
+	configOptions = [
+			artifactDescription : desc,
+			reactive : "false",
+			java11 : "true",
+			dateLibrary : "java8",
+			serializationLibrary : "jackson",
+			enableBuilderSuport : "true"
+	]
 }
