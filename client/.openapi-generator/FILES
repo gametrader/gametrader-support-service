@@ -5,6 +5,9 @@ README.md
 api/openapi.yaml
 build.gradle
 build.sbt
+docs/CategoryControllerApi.md
+docs/IssueControllerApi.md
+docs/IssueDto.md
 docs/TestControllerApi.md
 git_push.sh
 gradle.properties
@@ -15,6 +18,8 @@ gradlew.bat
 pom.xml
 settings.gradle
 src/main/AndroidManifest.xml
+src/main/java/com/gametrader/api/CategoryControllerApi.java
+src/main/java/com/gametrader/api/IssueControllerApi.java
 src/main/java/com/gametrader/api/TestControllerApi.java
 src/main/java/com/gametrader/api/invoker/ApiClient.java
 src/main/java/com/gametrader/api/invoker/JavaTimeFormatter.java
@@ -25,4 +30,8 @@ src/main/java/com/gametrader/api/invoker/auth/ApiKeyAuth.java
 src/main/java/com/gametrader/api/invoker/auth/Authentication.java
 src/main/java/com/gametrader/api/invoker/auth/HttpBasicAuth.java
 src/main/java/com/gametrader/api/invoker/auth/HttpBearerAuth.java
+src/main/java/com/gametrader/api/model/IssueDto.java
+src/test/java/com/gametrader/api/CategoryControllerApiTest.java
+src/test/java/com/gametrader/api/IssueControllerApiTest.java
 src/test/java/com/gametrader/api/TestControllerApiTest.java
+src/test/java/com/gametrader/api/model/IssueDtoTest.java

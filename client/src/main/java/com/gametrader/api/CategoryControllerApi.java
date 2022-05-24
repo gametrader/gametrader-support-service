@@ -25,16 +25,16 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-05-24T17:59:05.893134800+02:00[Europe/Belgrade]")
-@Component("com.gametrader.api.TestControllerApi")
-public class TestControllerApi {
+@Component("com.gametrader.api.CategoryControllerApi")
+public class CategoryControllerApi {
     private ApiClient apiClient;
 
-    public TestControllerApi() {
+    public CategoryControllerApi() {
         this(new ApiClient());
     }
 
     @Autowired
-    public TestControllerApi(ApiClient apiClient) {
+    public CategoryControllerApi(ApiClient apiClient) {
         this.apiClient = apiClient;
     }
 
@@ -50,21 +50,21 @@ public class TestControllerApi {
      * 
      * 
      * <p><b>200</b> - OK
-     * @return String
+     * @return List&lt;String&gt;
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public String test() throws RestClientException {
-        return testWithHttpInfo().getBody();
+    public List<String> getAllCategories() throws RestClientException {
+        return getAllCategoriesWithHttpInfo().getBody();
     }
 
     /**
      * 
      * 
      * <p><b>200</b> - OK
-     * @return ResponseEntity&lt;String&gt;
+     * @return ResponseEntity&lt;List&lt;String&gt;&gt;
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<String> testWithHttpInfo() throws RestClientException {
+    public ResponseEntity<List<String>> getAllCategoriesWithHttpInfo() throws RestClientException {
         Object postBody = null;
         
 
@@ -82,7 +82,7 @@ public class TestControllerApi {
 
         String[] authNames = new String[] {  };
 
-        ParameterizedTypeReference<String> returnType = new ParameterizedTypeReference<String>() {};
-        return apiClient.invokeAPI("/", HttpMethod.GET, Collections.<String, Object>emptyMap(), queryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, authNames, returnType);
+        ParameterizedTypeReference<List<String>> returnType = new ParameterizedTypeReference<List<String>>() {};
+        return apiClient.invokeAPI("/v1/support/category/get/all", HttpMethod.GET, Collections.<String, Object>emptyMap(), queryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, authNames, returnType);
     }
 }
