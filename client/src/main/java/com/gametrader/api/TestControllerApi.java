@@ -24,7 +24,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-03-17T21:26:37.480887500+01:00[Europe/Belgrade]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-05-24T17:50:03.875789800+02:00[Europe/Belgrade]")
 @Component("com.gametrader.api.TestControllerApi")
 public class TestControllerApi {
     private ApiClient apiClient;
