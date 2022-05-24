@@ -29,6 +29,9 @@ public class IssueEntity {
     @Column(name = "category", nullable = false)
     private Category category;
 
-    @Column(name = "category", nullable = false)
+    @Column(name = "content", nullable = false)
     private String content;
+
+    @Column(name = "is_resolved", nullable = false)
+    private Boolean isResolved;
 }

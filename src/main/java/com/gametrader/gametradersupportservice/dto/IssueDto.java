@@ -12,6 +12,8 @@ import javax.validation.constraints.NotNull;
 @Setter
 public class IssueDto {
     @NotNull
+    private Long id;
+    @NotNull
     private Long authorId;
     @NotNull
     private String title;
@@ -19,4 +21,6 @@ public class IssueDto {
     private Category category;
     @NotNull
     private String content;
+    @NotNull
+    private Boolean isResolved;
 }

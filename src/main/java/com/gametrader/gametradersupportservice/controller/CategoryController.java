@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/v1/category")
+@RequestMapping("/v1/support/category")
 public class CategoryController {
 
     @GetMapping("/get/all")

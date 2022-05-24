@@ -84,13 +84,17 @@ jacocoTestCoverageVerification {
 			includes = ['com.gametrader.*']
 			excludes = ['com.gametrader.gametradersupportservice.GametraderSupportServiceApplication',
 						'com.gametrader.gametradersupportservice.config.*',
+						'com.gametrader.gametradersupportservice.dto.*',
+						'com.gametrader.gametradersupportservice.entity.*',
+						'com.gametrader.gametradersupportservice.mapper.*',
+						'com.gametrader.gametradersupportservice.repository.*',
 						'com.gametrader.gametradersupportservice.controller.TestController'
 			]
 
 			limit {
 				counter = 'LINE'
 				value = 'COVEREDRATIO'
-				minimum = 0.8
+				minimum = 0.5
 			}
 		}
 	}
