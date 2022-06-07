@@ -3,7 +3,7 @@ package com.gametrader.api.invoker.auth;
 import org.springframework.http.HttpHeaders;
 import org.springframework.util.MultiValueMap;
 
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-03-17T21:26:37.480887500+01:00[Europe/Belgrade]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-05-24T17:59:05.893134800+02:00[Europe/Belgrade]")
 public class ApiKeyAuth implements Authentication {
     private final String location;
     private final String paramName;

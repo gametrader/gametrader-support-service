@@ -11,6 +11,52 @@
     }
   ],
   "paths": {
+    "/v1/support/issue/update/{id}": {
+      "put": {
+        "tags": [
+          "issue-controller"
+        ],
+        "operationId": "updateIssue",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/IssueDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/v1/support/issue/create": {
+      "post": {
+        "tags": [
+          "issue-controller"
+        ],
+        "operationId": "createIssue",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/IssueDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/": {
       "get": {
         "tags": [
@@ -30,7 +76,222 @@
           }
         }
       }
+    },
+    "/v1/support/issue/get/{id}": {
+      "get": {
+        "tags": [
+          "issue-controller"
+        ],
+        "operationId": "getPostById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/IssueDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/support/issue/get/all": {
+      "get": {
+        "tags": [
+          "issue-controller"
+        ],
+        "operationId": "getAllPosts",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/IssueDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/support/issue/get/all/{category}": {
+      "get": {
+        "tags": [
+          "issue-controller"
+        ],
+        "operationId": "getAllPostsByCategory",
+        "parameters": [
+          {
+            "name": "category",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "BUG",
+                "PAYMENTS"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/IssueDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/support/issue/get/all/{authorId}": {
+      "get": {
+        "tags": [
+          "issue-controller"
+        ],
+        "operationId": "getAllPostsByAuthorId",
+        "parameters": [
+          {
+            "name": "authorId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/IssueDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/support/issue/get/all/unresolved": {
+      "get": {
+        "tags": [
+          "issue-controller"
+        ],
+        "operationId": "getAllPostsByAuthorId_1",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/IssueDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/support/category/get/all": {
+      "get": {
+        "tags": [
+          "category-controller"
+        ],
+        "operationId": "getAllCategories",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "enum": [
+                      "BUG",
+                      "PAYMENTS"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
-  "components": {}
+  "components": {
+    "schemas": {
+      "IssueDto": {
+        "required": [
+          "authorId",
+          "category",
+          "content",
+          "id",
+          "isResolved",
+          "title"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "authorId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "title": {
+            "type": "string"
+          },
+          "category": {
+            "type": "string",
+            "enum": [
+              "BUG",
+              "PAYMENTS"
+            ]
+          },
+          "content": {
+            "type": "string"
+          },
+          "isResolved": {
+            "type": "boolean"
+          }
+        }
+      }
+    }
+  }
 }

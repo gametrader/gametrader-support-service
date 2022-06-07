@@ -6,6 +6,38 @@ servers:
 - description: Generated server url
   url: http://localhost:8080
 paths:
+  /v1/support/issue/update/{id}:
+    put:
+      operationId: updateIssue
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IssueDto'
+        required: true
+      responses:
+        "200":
+          description: OK
+      tags:
+      - issue-controller
+      x-contentType: application/json
+      x-accepts: application/json
+  /v1/support/issue/create:
+    post:
+      operationId: createIssue
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IssueDto'
+        required: true
+      responses:
+        "200":
+          description: OK
+      tags:
+      - issue-controller
+      x-contentType: application/json
+      x-accepts: application/json
   /:
     get:
       operationId: test
@@ -19,6 +51,160 @@ paths:
       tags:
       - test-controller
       x-accepts: '*/*'
+  /v1/support/issue/get/{id}:
+    get:
+      operationId: getPostById
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          format: int64
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/IssueDto'
+          description: OK
+      tags:
+      - issue-controller
+      x-accepts: '*/*'
+  /v1/support/issue/get/all:
+    get:
+      operationId: getAllPosts
+      responses:
+        "200":
+          content:
+            '*/*':
+              schema:
+                items:
+                  $ref: '#/components/schemas/IssueDto'
+                type: array
+          description: OK
+      tags:
+      - issue-controller
+      x-accepts: '*/*'
+  /v1/support/issue/get/all/{category}:
+    get:
+      operationId: getAllPostsByCategory
+      parameters:
+      - explode: false
+        in: path
+        name: category
+        required: true
+        schema:
+          enum:
+          - BUG
+          - PAYMENTS
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            '*/*':
+              schema:
+                items:
+                  $ref: '#/components/schemas/IssueDto'
+                type: array
+          description: OK
+      tags:
+      - issue-controller
+      x-accepts: '*/*'
+  /v1/support/issue/get/all/{authorId}:
+    get:
+      operationId: getAllPostsByAuthorId
+      parameters:
+      - explode: false
+        in: path
+        name: authorId
+        required: true
+        schema:
+          format: int64
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            '*/*':
+              schema:
+                items:
+                  $ref: '#/components/schemas/IssueDto'
+                type: array
+          description: OK
+      tags:
+      - issue-controller
+      x-accepts: '*/*'
+  /v1/support/issue/get/all/unresolved:
+    get:
+      operationId: getAllPostsByAuthorId_1
+      responses:
+        "200":
+          content:
+            '*/*':
+              schema:
+                items:
+                  $ref: '#/components/schemas/IssueDto'
+                type: array
+          description: OK
+      tags:
+      - issue-controller
+      x-accepts: '*/*'
+  /v1/support/category/get/all:
+    get:
+      operationId: getAllCategories
+      responses:
+        "200":
+          content:
+            '*/*':
+              schema:
+                items:
+                  enum:
+                  - BUG
+                  - PAYMENTS
+                  type: string
+                type: array
+          description: OK
+      tags:
+      - category-controller
+      x-accepts: '*/*'
 components:
-  schemas: {}
+  schemas:
+    IssueDto:
+      example:
+        id: 0
+        authorId: 6
+        title: title
+        category: BUG
+        isResolved: true
+        content: content
+      properties:
+        id:
+          format: int64
+          type: integer
+        authorId:
+          format: int64
+          type: integer
+        title:
+          type: string
+        category:
+          enum:
+          - BUG
+          - PAYMENTS
+          type: string
+        content:
+          type: string
+        isResolved:
+          type: boolean
+      required:
+      - authorId
+      - category
+      - content
+      - id
+      - isResolved
+      - title
+      type: object
 

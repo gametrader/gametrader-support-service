@@ -1,0 +1,5 @@
+ALTER TABLE issue
+    ADD content VARCHAR(255);
+
+ALTER TABLE issue
+    ALTER COLUMN content SET NOT NULL;
